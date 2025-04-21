@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @SpringBootTest
@@ -38,13 +39,28 @@ public class PersonRepositoryTest {
     public void findAll() {
         List<Person> personsList = new ArrayList<>();
         iPersonRepository.saveAll(personsList);
-
         assertNotNull(personsList);
 
         List<Person> foundPersons = iPersonRepository.findAll();
         System.out.println("Found persons: " + foundPersons);
         assertNotNull(foundPersons);
-        assertEquals("John Doe",foundPersons.get(1).getName());
+        assertEquals("John Doe", foundPersons.get(1).getName());
         assertEquals(30, foundPersons.get(1).getAge());
+    }
+
+    @Test
+    @DisplayName("borra personas")
+    public void testDelete() {
+        Person person = new Person("Clara", 15);
+        Person savedPerson = iPersonRepository.save(person);
+        Optional<Person> foundPerson = iPersonRepository.findById(savedPerson.getId());
+        assertTrue(foundPerson.isPresent());
+
+        //optional es obligatorio pq esta definido asi en JPARepository
+        iPersonRepository.delete(savedPerson);
+        Optional<Person> deletedPerson = iPersonRepository.findById(savedPerson.getId());
+        System.out.println("Deleted person: " + deletedPerson);
+
+        assertTrue(deletedPerson.isEmpty());
     }
 }
