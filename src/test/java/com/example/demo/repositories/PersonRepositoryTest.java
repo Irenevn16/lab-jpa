@@ -63,4 +63,30 @@ public class PersonRepositoryTest {
 
         assertTrue(deletedPerson.isEmpty());
     }
+
+    @Test
+    @DisplayName("comprobamos que actualiza")
+    public void testUpdate() {
+        Person person = new Person("Pepe", 89);
+        Person savedPerson = iPersonRepository.save(person);
+        Optional<Person> foundPerson = iPersonRepository.findById(savedPerson.getId());
+        assertNotNull(foundPerson);
+
+        Person changedPerson = foundPerson.get();
+        changedPerson.setName("María");
+        changedPerson.setAge(99);
+        iPersonRepository.save(changedPerson);
+
+        Optional<Person> updatedPerson = iPersonRepository.findById(changedPerson.getId());
+        assertNotNull(updatedPerson);
+        System.out.println("Updated person: " + updatedPerson);
+
+        Person updatedPerson1 = updatedPerson.get();
+        assertNotNull(updatedPerson1.getId());
+
+        assertEquals("María", updatedPerson1.getName());
+        assertEquals(99, updatedPerson1.getAge());
+        //cómo hago esto sin crear tantas variables?
+
+    }
 }
