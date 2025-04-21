@@ -1,28 +1,29 @@
-package repositories;
-
+package com.example.demo.repositories;
 import com.example.demo.Repositories.IPersonRepository;
 import com.example.demo.models.Person;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import static org.junit.jupiter.api.Assertions.*;
-import java.util.List;
+
 
 @SpringBootTest
 public class PersonRepositoryTest {
+
     @Autowired
-    private PersonRepositoryTest;
+    public IPersonRepository iPersonRepository;
 
     @Test
     @DisplayName("Guarda la persona")
-
     public void testSave() {
-       Person person1 = new Person("Pedro", 28);
-       Person savedPerson = IPersonRepository.save(person1);
+       Person person = new Person("Pedro", 28);
+       System.out.println("Persona: " + person);
+       iPersonRepository.save(person);
 
-
+       var newPerson = iPersonRepository.save(person);
+       assertNotNull(newPerson);
     }
 
 }

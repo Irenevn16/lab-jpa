@@ -53,7 +53,11 @@ public class Person {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }
 
