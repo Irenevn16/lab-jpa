@@ -9,14 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 
-    @RestController
-    public class PersonController {
-        @Autowired
+@RestController
+public class PersonController {
+    @Autowired
+    private IPersonRepository iPersonRepository;
 
-        private IPersonRepository iPersonRepository;
+    @GetMapping("/api/hello")
+    public String hello(){
+        return "Hola mundo";
+    }
 
-        @GetMapping("/persons")
-        public List<Person> personsList(){
+    @GetMapping("/api/persons")
+    public List<Person> getAllPersons(){
             return iPersonRepository.findAll();
         }
 
